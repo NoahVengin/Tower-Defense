@@ -6,17 +6,19 @@ public class EnemyMover : MonoBehaviour
 {
     [SerializeField] List<Waypoint> path = new List<Waypoint>();
 
+    
     // Start is called before the first frame update
     void Start()
     {
-        PrintWaypointName();
+        StartCoroutine(FollowPath());
     }
 
-    void PrintWaypointName()
+    IEnumerator FollowPath()
     {
         foreach(Waypoint waypoint in path)
         {
-            Debug.Log(waypoint.name);
+            transform.position = waypoint.gameObject.transform.position;
+            yield return new WaitForSeconds(1.0f);
         }
     }
 }
