@@ -17,8 +17,18 @@ public class EnemyMover : MonoBehaviour
     {
         foreach(Waypoint waypoint in path)
         {
-            transform.position = waypoint.gameObject.transform.position;
-            yield return new WaitForSeconds(1.0f);
+            Vector3 startPosition = transform.position;
+            Vector3 endPosition = waypoint.gameObject.transform.position;
+            float travelPercent = 0f;
+
+            transform.LookAt(endPosition);
+
+            while(travelPercent < 1f)
+            {
+                travelPercent += Time.deltaTime;
+                transform.position = Vector3.Lerp(startPosition, endPosition, travelPercent);
+                yield return new WaitForEndOfFrame();
+            }
         }
-    }
+    } 
 }
